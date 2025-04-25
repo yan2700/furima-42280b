@@ -14,5 +14,5 @@ validates :last_name, presence: true ,format: { with: VALID_ZENKAKU_REGEX, messa
 validates :first_name, presence: true,format: { with: VALID_ZENKAKU_REGEX, message: 'is invalid. Input full-width characters' }
 validates :last_name_kana, presence: true,format: { with: /\A[ァ-ヶー－]+\z/, message: 'is invalid. Input full-width katakana characters' }
 validates :first_name_kana, presence: true,format: { with: VALID_KATAKANA_REGEX, message: 'is invalid. Input full-width katakana characters' }
-
+validates :email, presence: true, uniqueness: true
 end
