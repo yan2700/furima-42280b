@@ -78,5 +78,6 @@ group :production do
   gem 'pg'
 end
 
-# gem 'devise'
-# gem 'sassc-rails'
+gem 'devise'
+gem 'sassc-rails'
+  gem 'factory_bot_rails'
