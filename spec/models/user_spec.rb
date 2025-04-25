@@ -19,7 +19,7 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Nickname can't be blank")
       end
-    end
+    
 
     it 'nicknameが空では登録できない' do
       @user.nickname = ''
@@ -41,9 +41,6 @@ RSpec.describe User, type: :model do
       another_user.valid?
       expect(another_user.errors.full_messages).to include('Email has already been taken')
     end
-    
-    
-    
 
       it 'passwordが空では登録できない' do
         @user.password = ''
@@ -140,7 +137,6 @@ RSpec.describe User, type: :model do
         @user.valid?
         expect(@user.errors.full_messages).to include("Birthday can't be blank")
       end
-
-    
+    end
   end
 end
