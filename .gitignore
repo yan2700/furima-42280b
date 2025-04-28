@@ -36,3 +36,5 @@
 
 .Ds_Store
 *.Identifier
+app/views/devise/mailer/confirmation_instructions.html.erbZone.Identifier
+app/views/devise/mailer/email_changed.html.erbZone.Identifier
