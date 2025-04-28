@@ -78,6 +78,20 @@ RSpec.describe Item, type: :model do
         @item.price = 10_000_000
         @item.valid?
         expect(@item.errors[:price]).to include("must be less than or equal to 9999999")
+
+        
+      it '価格が半角数値以外では登録できない' do
+       @item.price = '１０００'  
+       @item.valid?
+       expect(@item.errors[:price]).to include('is not a number')
+      end
+
+      it 'userが紐づいていないと登録できない' do
+        @item.user = nil
+        @item.valid?
+       expect(@item.errors[:user]).to include("must exist")
+     end
+
       end
     end
   end
