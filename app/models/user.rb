@@ -16,5 +16,5 @@ validates :last_name_kana, presence: true,format: { with: /\A[ァ-ヶー－]+\z/
 validates :first_name_kana, presence: true,format: { with: VALID_KATAKANA_REGEX, message: 'is invalid. Input full-width katakana characters' }
 
 has_many :items
-- has_many :orders
+ has_many :orders
 end
