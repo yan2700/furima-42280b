@@ -7,18 +7,8 @@
     <h2 class="items-sell-title">商品の情報を入力</h2>
     <%= form_with model: @item, local: true, data: { turbo: false } do |f| %>
 
-<% if @item.errors.any? %>
-  <div class="error-messages" style="text-align: center;">
-    <ul style="list-style-type: circle; color:  #ea352d; display: inline-block; text-align: left;">
-      <% @item.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-    </ul>
-  </div>
-<% end %>
 
-
-
+<%= render 'shared/error_messages', model: @item %>
 
 
     <%# 商品画像 %>

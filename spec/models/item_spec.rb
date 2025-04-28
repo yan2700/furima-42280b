@@ -2,67 +2,83 @@ require 'rails_helper'
 
 RSpec.describe Item, type: :model do
   before do
-    @user = User.create!(
-      nickname: 'テスト太郎',
-      email: 'test@example.com',
-      password: 'password123',
-      password_confirmation: 'password123',
-      last_name: '山田',
-      first_name: '太郎',
-      last_name_kana: 'ヤマダ',
-      first_name_kana: 'タロウ',
-      birthday: '1990-01-01'
-    )
+    @item = FactoryBot.build(:item)
   end
 
-  it "is valid with valid attributes" do
-    item = Item.new(
-      name: "商品名",
-      description: "商品説明",
-      price: 1000,
-      category_id: 2,
-      status_id: 2,
-      shipping_fee_status_id: 2,
-      prefecture_id: 2,
-      scheduled_delivery_id: 2,
-      user: @user,
-      image: Rack::Test::UploadedFile.new(Rails.root.join('spec/fixtures/files/test_image.jpg'), 'image/jpg')
-    )
-    expect(item).to be_valid
+  describe '商品出品' do
+    context '商品が出品できる場合' do
+      it 'すべての入力項目が正しく存在すれば登録できる' do
+        expect(@item).to be_valid
+      end
+    end
+
+    context '商品が出品できない場合' do
+      it 'カテゴリーが空だと登録できない' do
+        @item.category_id = nil
+        @item.valid?
+        expect(@item.errors[:category_id]).to include("can't be blank")
+      end
+
+      it 'ステータスが空だと登録できない' do
+        @item.status_id = nil
+        @item.valid?
+        expect(@item.errors[:status_id]).to include("can't be blank")
+      end
+
+      it '配送料負担が空だと登録できない' do
+        @item.shipping_fee_status_id = nil
+        @item.valid?
+        expect(@item.errors[:shipping_fee_status_id]).to include("can't be blank")
+      end
+
+      it '発送元の地域が空だと登録できない' do
+        @item.prefecture_id = nil
+        @item.valid?
+        expect(@item.errors[:prefecture_id]).to include("can't be blank")
+      end
+
+      it '発送までの日数が空だと登録できない' do
+        @item.scheduled_delivery_id = nil
+        @item.valid?
+        expect(@item.errors[:scheduled_delivery_id]).to include("can't be blank")
+      end
+
+      
+      it '商品名が空だと登録できない' do
+        @item.name = ''
+        @item.valid?
+        expect(@item.errors[:name]).to include("can't be blank")
+      end
+
+      it '商品説明が空だと登録できない' do
+        @item.description = ''
+        @item.valid?
+        expect(@item.errors[:description]).to include("can't be blank")
+      end
+
+      it '価格が空だと登録できない' do
+        @item.price = ''
+        @item.valid?
+        expect(@item.errors[:price]).to include("can't be blank")
+      end
+
+      it '画像が空だと登録できない' do
+        @item.image = nil
+        @item.valid?
+        expect(@item.errors[:image]).to include("can't be blank")
+      end
+
+      it '価格が299円以下だと登録できない' do
+        @item.price = 299
+        @item.valid?
+        expect(@item.errors[:price]).to include("must be greater than or equal to 300")
+      end
+
+      it '価格が10,000,000円以上だと登録できない' do
+        @item.price = 10_000_000
+        @item.valid?
+        expect(@item.errors[:price]).to include("must be less than or equal to 9999999")
+      end
+    end
   end
-
-  # ----------------------
-  # presence:true をテスト（nilなら "can't be blank" を期待）
-  it "is invalid without a category" do
-    item = Item.new(category_id: nil)
-    item.valid?
-    expect(item.errors[:category_id]).to include("can't be blank")
-  end
-
-  it "is invalid without a status" do
-    item = Item.new(status_id: nil)
-    item.valid?
-    expect(item.errors[:status_id]).to include("can't be blank")
-  end
-
-  it "is invalid without a shipping fee status" do
-    item = Item.new(shipping_fee_status_id: nil)
-    item.valid?
-    expect(item.errors[:shipping_fee_status_id]).to include("can't be blank")
-  end 
-
-  it "is invalid without a prefecture" do
-    item = Item.new(prefecture_id: nil)
-    item.valid?
-    expect(item.errors[:prefecture_id]).to include("can't be blank")
-  end
-
-  it "is invalid without a scheduled delivery" do
-    item = Item.new(scheduled_delivery_id: nil)
-    item.valid?
-    expect(item.errors[:scheduled_delivery_id]).to include("can't be blank")
-  end  
-    
-
-  
 end
