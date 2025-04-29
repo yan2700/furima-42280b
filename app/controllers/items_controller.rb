@@ -13,7 +13,7 @@ class ItemsController < ApplicationController
   end
 
   def new
-    @item = Item.new  # ここで商品オブジェクトを作成
+    @item = Item.new  
   end
 
   def create
