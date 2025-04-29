@@ -1,9 +1,9 @@
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
-  def sold_out?
-    order.present?
-  end
+  #def sold_out?
+  #  order.present?
+ # end
   
   belongs_to :category
   belongs_to :status
@@ -13,7 +13,7 @@ class Item < ApplicationRecord
   belongs_to :user
   has_one_attached :image
   has_one :order
-  
+
   with_options presence: true do
     validates :image
     validates :name
