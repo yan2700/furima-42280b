@@ -5,7 +5,8 @@ class ItemsController < ApplicationController
     puts "＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝"
     puts "current_user：#{current_user&.email || 'ログインしていません'}"
     puts "＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝"
-   @items = Item.all
+    @items = Item.order(created_at: :desc)
+   
   end
 
   def show
