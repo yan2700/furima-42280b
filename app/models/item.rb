@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
@@ -30,7 +30,7 @@ class Item < ApplicationRecord
             numericality: { other_than: 1, message: "can't be blank" }  
   
 end
-=======
+
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
