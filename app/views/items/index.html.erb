@@ -1,7 +1,12 @@
 <%= render "shared/header" %>
+
 <div class='main'>
 
+
   <%# トップバナー帯 %>
+
+  <%# トップメッセージ %>
+
   <div class='title-contents'>
     <h2 class='service-title'>人生を変えるフリマアプリ</h2>
     <p class='service-explain'>FURIMAはだれでもかんたんに出品・購入できる</p>
@@ -12,7 +17,11 @@
     </div>
   </div>
 
+
   <%# FURIMAが選ばれる3つの理由 %>
+
+  <%# 選ばれる理由 %>
+
   <div class='select-reason-contents'>
     <h2 class='title'>FURIMAが選ばれる3つの理由</h2>
     <ul class='reason-lists'>
@@ -37,6 +46,7 @@
     </ul>
   </div>
 
+
   <%# 会員数帯 %>
   <div class='ad-contents'>
     <h2 class='ad-title'>会員数日本一位</h2>
@@ -48,6 +58,7 @@
       <%= link_to image_tag("google-play.png", class: "google-btn"), "#" %>
     </div>
   </div>
+
 
   <%# FURIMAの特徴 %>
   <div class='feature-contents'>
@@ -61,12 +72,20 @@
       <li class='list'>
         <%= image_tag "furima-intro05.png", class: "list-pict" %>
         <h3 class='feature-list-text'>売上金は即日振込みに対応</h3>
+
         <p class='feature-list-description'>午前9時までに振込を依頼いただければ、翌日に指定の口座に入金いたします。</p>
+
+        <p class='feature-list-description'>午前9時までに振込依頼すれば翌日入金！</p>
+
       </li>
       <li class='list'>
         <%= image_tag "furima-intro06.png", class: "list-pict" %>
         <h3 class='feature-list-text'>様々な支払いに対応</h3>
+
         <p class='feature-list-description'>お支払いは、クレジットカードだけでなく、ポイントや売上金など多彩な方法があります。</p>
+
+        <p class='feature-list-description'>クレジットカード・ポイント・売上金など多彩な方法！</p>
+
       </li>
     </ul>
   </div>
@@ -74,22 +93,40 @@
   <%# 商品一覧 %>
   <div class='item-contents'>
     <h2 class='title'>ピックアップカテゴリー</h2>
+
     <div class='subtitle'>新規投稿商品</div>
+
+    <div class="subtitle">新規投稿商品</div>
+
     <ul class='item-lists'>
       <% if @items.present? %>
         <% @items.each do |item| %>
           <li class='list'>
+
             <%= link_to item_path(item) do %>
               <div class='item-img-content'>
                 <%= image_tag item.image, class: "item-img" if item.image.attached? %>
                 <% if item.order.present? %>
                   <div class='sold-out'><span>Sold Out!!</span></div>
+
+            <%= link_to '#' do %>
+              <div class='item-img-content'>
+                <%= image_tag item.image, class: "item-img" if item.image.attached? %>
+                <% if item.respond_to?(:sold_out?) && item.sold_out? %>
+                  <div class='sold-out'>
+                    <span>Sold Out!!</span>
+                  </div>
+
                 <% end %>
               </div>
               <div class='item-info'>
                 <h3 class='item-name'><%= item.name %></h3>
                 <div class='item-price'>
+
                   <span><%= item.price %>円<br><%= item.shipping_fee_status.name %></span>
+
+                 <span><%= item.price %>円<br><%= item.shipping_fee_status.name %></span>
+
                   <div class='star-btn'>
                     <%= image_tag "star.png", class: "star-icon" %>
                     <span class='star-count'>0</span>
@@ -100,9 +137,16 @@
           </li>
         <% end %>
       <% else %>
+
         <li class='list'>
           <%= link_to '#' do %>
             <%= image_tag "item-sample.png", class: "item-img" %>
+
+        <%# ダミー商品表示 %>
+        <li class='list'>
+          <%= link_to '#' do %>
+            <%= image_tag "https://tech-master.s3.amazonaws.com/uploads/curriculums/images/Rails1-4/sample.jpg", class: "item-img" %>
+
             <div class='item-info'>
               <h3 class='item-name'>商品を出品してね！</h3>
               <div class='item-price'>
@@ -118,9 +162,16 @@
       <% end %>
     </ul>
   </div>
+
 </div>
 
 <%= link_to(new_item_path, class: 'purchase-btn') do %>
+
+
+</div>
+
+<%= link_to new_item_path, class: 'purchase-btn' do %>
+
   <span class='purchase-btn-text'>出品する</span>
   <%= image_tag 'icon_camera.png', size: '185x50', class: "purchase-btn-icon" %>
 <% end %>

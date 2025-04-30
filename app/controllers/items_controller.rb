@@ -6,10 +6,15 @@ class ItemsController < ApplicationController
     puts "current_user：#{current_user&.email || 'ログインしていません'}"
     puts "＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝"
     @items = Item.order(created_at: :desc)
+
   end
 
+ # def show
+   # @item = Item.find(params[:id])
+  #end
+
   def new
-    @item = Item.new  # ここで商品オブジェクトを作成
+    @item = Item.new  
   end
 
   def show

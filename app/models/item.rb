@@ -1,6 +1,10 @@
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
+  def sold_out?
+    order.present?
+  end
+  
   belongs_to :category
   belongs_to :status
   belongs_to :shipping_fee_status
@@ -8,9 +12,13 @@ class Item < ApplicationRecord
   belongs_to :scheduled_delivery
   belongs_to :user
   has_one_attached :image
+
   
 #has_one :order
 
+
+
+  has_one :order
 
   with_options presence: true do
     validates :image
