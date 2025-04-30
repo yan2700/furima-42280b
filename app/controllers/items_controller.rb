@@ -5,7 +5,7 @@ class ItemsController < ApplicationController
     puts "＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝"
     puts "current_user：#{current_user&.email || 'ログインしていません'}"
     puts "＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝"
-    @items = Item.all
+    @items = Item.order(created_at: :desc)
   end
 
   def new
@@ -16,7 +16,7 @@ class ItemsController < ApplicationController
    @item = Item.find(params[:id])
   end
 
-  def create
+  def create 
     @item = Item.new(item_params)
     @item.user_id = current_user.id  # ユーザーのIDをセット
     if @item.save
