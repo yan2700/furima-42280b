@@ -1,5 +1,5 @@
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index]  # ログイン必須
+  before_action :authenticate_user!, except: [:index,:show]  # ログイン必須
 
   def index
     puts "＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝"
