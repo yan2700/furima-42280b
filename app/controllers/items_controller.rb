@@ -5,11 +5,15 @@ class ItemsController < ApplicationController
     puts "＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝"
     puts "current_user：#{current_user&.email || 'ログインしていません'}"
     puts "＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝"
-   # @items = Item.all
+    @items = Item.all
   end
 
   def new
     @item = Item.new  # ここで商品オブジェクトを作成
+  end
+
+  def show
+   @item = Item.find(params[:id])
   end
 
   def create
