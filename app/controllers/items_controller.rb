@@ -43,5 +43,4 @@ class ItemsController < ApplicationController
     )  # ここでの閉じ括弧を忘れずに
   end
 
-
 end

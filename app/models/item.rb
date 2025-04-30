@@ -70,4 +70,3 @@ class Item < ApplicationRecord
             numericality: { other_than: 1, message: "can't be blank" }  
   
 end
->>>>>>> e9ec3ff4cedb8e1a6c7f2f35330569d4fc8b8072
