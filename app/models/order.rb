@@ -1,4 +1,3 @@
-
 class Order < ApplicationRecord
 
 

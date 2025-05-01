@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]  # ログイン必須
-  before_action :find_item, only: [:edit, :update, :show,:destroy]  # find_itemメソッドを共通化
+  before_action :find_item, only: [:edit, :update, :show,:destroy]  # find_itemメソッドを共通
+ 
 
   def index
     puts "＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝"
@@ -42,6 +43,7 @@ class ItemsController < ApplicationController
   end
 
   
+
   def destroy
     if @item.user == current_user
       @item.destroy
@@ -50,6 +52,7 @@ class ItemsController < ApplicationController
       redirect_to root_path, alert: '削除権限がありません'
     end
   end
+
   private
 
   def find_item
@@ -69,4 +72,6 @@ class ItemsController < ApplicationController
       :image
     )
   end
+
+end
 end
