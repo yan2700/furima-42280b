@@ -1,6 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]  # ログイン必須
-  before_action :find_item, only: [:edit, :update, :show]  
+  before_action :find_item, only: [:edit, :update, :show]  # find_itemメソッドを共通化
+
   def index
     puts "＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝"
     puts "current_user：#{current_user&.email || 'ログインしていません'}"
@@ -13,7 +14,6 @@ class ItemsController < ApplicationController
   end
 
   def edit
-    @item = Item.find(params[:id])
     if @item.user != current_user
       redirect_to root_path, alert: '不正なアクセスです。自分が出品した商品以外は編集できません。'
     end
@@ -24,7 +24,7 @@ class ItemsController < ApplicationController
   end
 
   def update
-    @item = Item.find(params[:id])  
+    if @item.update(item_params)
       redirect_to @item, notice: 'Item was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
@@ -41,7 +41,11 @@ class ItemsController < ApplicationController
     end
   end
   
-  private  # ここから下はprivateメソッドとして定義する
+  private
+
+  def find_item
+    @item = Item.find(params[:id])  # find_itemメソッドで共通化
+  end
 
   def item_params
     params.require(:item).permit(
@@ -54,6 +58,6 @@ class ItemsController < ApplicationController
       :prefecture_id, 
       :scheduled_delivery_id, 
       :image
-    )  # ここでの閉じ括弧を忘れずに
+    )
   end
 end
