@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]  # ログイン必須
-
+  before_action :find_item, only: [:edit, :update, :show]  
   def index
     puts "＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝"
     puts "current_user：#{current_user&.email || 'ログインしていません'}"
@@ -20,12 +20,11 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id])
+    
   end
 
   def update
     @item = Item.find(params[:id])  
-    if @item.update(item_params) 
       redirect_to @item, notice: 'Item was successfully updated.'
     else
       render :edit, status: :unprocessable_entity
