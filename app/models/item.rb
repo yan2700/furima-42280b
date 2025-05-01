@@ -1,3 +1,9 @@
+
+
+class Item < ApplicationRecord
+  extend ActiveHash::Associations::ActiveRecordExtensions
+
+
 class Item < ApplicationRecord
   extend ActiveHash::Associations::ActiveRecordExtensions
 
@@ -7,6 +13,7 @@ class Item < ApplicationRecord
   end
   
   # 関連付け
+
   belongs_to :category
   belongs_to :status
   belongs_to :shipping_fee_status
@@ -14,9 +21,12 @@ class Item < ApplicationRecord
   belongs_to :scheduled_delivery
   belongs_to :user
   has_one_attached :image
-  #has_one :order  
-
   
+#has_one :order
+
+
+
+
   with_options presence: true do
     validates :image
     validates :name
@@ -29,10 +39,11 @@ class Item < ApplicationRecord
     validates :scheduled_delivery_id
   end
 
-  # 価格のバリデーション
   validates :price, numericality: { only_integer: true, greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999 }
 
-
   validates :category_id, :status_id, :shipping_fee_status_id, :prefecture_id, :scheduled_delivery_id,
-            numericality: { other_than: 1, message: "can't be blank" }
+            numericality: { other_than: 1, message: "can't be blank" }  
+  
+
+
 end
