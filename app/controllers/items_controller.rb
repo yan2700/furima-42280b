@@ -1,6 +1,5 @@
-
 class ItemsController < ApplicationController
-  before_action :authenticate_user!, except: [:index,:show]  # ログイン必須
+  before_action :authenticate_user!, except: [:index, :show]  # ログイン必須
 
   def index
     puts "＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝"
@@ -13,11 +12,24 @@ class ItemsController < ApplicationController
     @item = Item.new  # ここで商品オブジェクトを作成
   end
 
-  def show
-   @item = Item.find(params[:id])
+  def edit
+    @item = Item.find(params[:id])
   end
 
-  def create 
+  def show
+    @item = Item.find(params[:id])
+  end
+
+  def update
+    @item = Item.find(params[:id])  
+    if @item.update(item_params) 
+      redirect_to @item, notice: 'Item was successfully updated.'
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+  
+  def create
     @item = Item.new(item_params)
     @item.user_id = current_user.id  # ユーザーのIDをセット
     if @item.save
@@ -42,5 +54,4 @@ class ItemsController < ApplicationController
       :image
     )  # ここでの閉じ括弧を忘れずに
   end
-
 end
