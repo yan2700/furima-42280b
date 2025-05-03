@@ -40,7 +40,8 @@ RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y \
     curl \
     default-mysql-client \
-    libvips && \
+    libvips \
++   libpq5 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 COPY --from=build /usr/local/bundle /usr/local/bundle
