@@ -84,6 +84,13 @@
               <div class='item-img-content'>
                 <%= image_tag item.image, class: "item-img" if item.image.attached? %>
                
+      <%# 商品が売れている場合は、sold outを表示しましょう %>
+     <% if item.order.present? %>
+  <div class="sold-out">
+    <span>Sold Out!!</span>
+  </div>
+<% end %>
+
               </div>
               <div class='item-info'>
                 <h3 class='item-name'><%= item.name %></h3>
@@ -128,5 +135,5 @@
 
 <%= render "shared/footer" %>
 
-<%= render "shared/footer" %>
+
 
