@@ -6,6 +6,9 @@ class OrderAddress
   attr_accessor :post_code, :prefecture_id, :city, :address, :building_name, :phone_number,
                 :user_id, :item_id, :token
 
+                validates :token, presence: { message: "can't be blank" }
+
+
                 validates :post_code,
                 presence: { message: "can't be blank" },
                 format: { with: /\A\d{3}-\d{4}\z/, message: "is invalid. Enter it as follows (e.g. 123-4567)" }

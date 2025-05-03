@@ -1,6 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 require 'spec_helper'
-
+require 'faker'
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
@@ -11,7 +11,7 @@ include ActionDispatch::TestProcess
 
 require 'rails_helper'
 RSpec.configure do |config|
-  
+  config.include FactoryBot::Syntax::Methods
   # その他の設定
 end
 
