@@ -2,6 +2,12 @@ class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_item
   before_action :redirect_if_sold_out
+  before_action :redirect_if_seller, only: [:index, :create]
+
+  def redirect_if_seller
+    redirect_to root_path if @item.user_id == current_user.id
+  end
+
 
   def index
     @order_address = OrderAddress.new
@@ -11,6 +17,12 @@ class OrdersController < ApplicationController
     @order_address = OrderAddress.new(order_params)
  
     if @order_address.valid?
+      Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp::Charge.create(
+      amount: Item.find(item_id).price,
+      card: token,
+      currency: 'jpy'
+    )
       @order_address.save
       redirect_to root_path
     else

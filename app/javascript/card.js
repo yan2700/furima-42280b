@@ -2,8 +2,8 @@ const pay = () => {
   const form = document.getElementById("charge-form");
   if (!form) return;
 
-  // 公開鍵を設定
-  const payjp = Payjp("pk_test_1382a67603c2f48849a659b3"); // ← 自分の公開鍵に置き換えてね
+  // 公開鍵を設定（metaタグから取得）
+  const payjp = Payjp(document.querySelector('meta[name="payjp-public-key"]').content);
   const elements = payjp.elements();
   const numberElement = elements.create("cardNumber");
   const cvcElement = elements.create("cardCvc");
@@ -30,3 +30,4 @@ const pay = () => {
 };
 
 window.addEventListener("turbo:load", pay);
+window.addEventListener("turbo:render", pay);

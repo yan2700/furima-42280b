@@ -30,12 +30,7 @@ class OrderAddress
   validates :item_id, presence: { message: "can't be blank" }
 
   def save
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
-    Payjp::Charge.create(
-      amount: Item.find(item_id).price,
-      card: token,
-      currency: 'jpy'
-    )
+    
 
     order = Order.create(user_id: user_id, item_id: item_id)
     Address.create(

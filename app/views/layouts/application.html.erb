@@ -2,19 +2,18 @@
 <!DOCTYPE html>
 <html>
   <head>
-  <title>Furima</title>
-  <%= csrf_meta_tags %>
-  <%= csp_meta_tag %>
+    <title>Furima</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <meta name="payjp-public-key" content="<%= ENV['PAYJP_PUBLIC_KEY'] %>">
 
-  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+    <%= javascript_include_tag "card", type: "module" %>
 
-  <%= javascript_importmap_tags %>
-  <%= javascript_include_tag "card", type: "module" %>
-
-  <!-- 🔽 Pay.jpのCDN読み込み（ここを追加！） -->
-  <script src="https://js.pay.jp/v2/pay.js"></script>
-</head>
-
+    <!-- 🔽 Pay.jpのCDN読み込み -->
+    <script src="https://js.pay.jp/v2/pay.js"></script>
+  </head>
 
   <body>
     <%= yield %>
