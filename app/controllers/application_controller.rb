@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
-
+  before_action :set_payjp_key
   protected
 
  
@@ -20,4 +20,8 @@ class ApplicationController < ActionController::Base
       :nickname, :birthday, :last_name, :first_name, :last_name_kana, :first_name_kana
     ])
   end  
+
+  def set_payjp_key
+    gon.public_key = ENV['PAYJP_PUBLIC_KEY']
+  end
 end
