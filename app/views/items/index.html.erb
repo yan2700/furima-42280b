@@ -1,4 +1,4 @@
-
+<%= include_gon %>
 <%= render "shared/header" %>
 <div class='main'>
 
@@ -84,6 +84,13 @@
               <div class='item-img-content'>
                 <%= image_tag item.image, class: "item-img" if item.image.attached? %>
                
+      
+     <% if item.order.present? %>
+  <div class="sold-out">
+    <span>Sold Out!!</span>
+  </div>
+<% end %>
+
               </div>
               <div class='item-info'>
                 <h3 class='item-name'><%= item.name %></h3>
@@ -128,5 +135,5 @@
 
 <%= render "shared/footer" %>
 
-<%= render "shared/footer" %>
+
 

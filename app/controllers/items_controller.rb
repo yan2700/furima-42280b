@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]  # ログイン必須
   before_action :find_item, only: [:edit, :update, :show,:destroy]  # find_itemメソッドを共通
- 
+  before_action :move_to_index_if_sold, only: [:edit, :update] 
 
   def index
     puts "＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝"
@@ -73,5 +73,8 @@ class ItemsController < ApplicationController
     )
   end
 
+  def move_to_index_if_sold
+    redirect_to root_path if @item.order.present?
+  end
 end
-end
+
