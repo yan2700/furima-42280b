@@ -4,9 +4,7 @@ class ItemsController < ApplicationController
   before_action :move_to_index_if_sold, only: [:edit, :update] 
 
   def index
-    puts "＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝"
-    puts "current_user：#{current_user&.email || 'ログインしていません'}"
-    puts "＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝"
+    
     @items = Item.order(created_at: :desc)
   end
 
