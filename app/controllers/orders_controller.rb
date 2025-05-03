@@ -4,9 +4,6 @@ class OrdersController < ApplicationController
   before_action :redirect_if_sold_out
   before_action :redirect_if_seller, only: [:index, :create]
 
-  def redirect_if_seller
-    redirect_to root_path if @item.user_id == current_user.id
-  end
 
 
   def index
@@ -45,7 +42,10 @@ class OrdersController < ApplicationController
     )
   end
   
-  
+  def redirect_if_seller
+    redirect_to root_path if @item.user_id == current_user.id
+  end
+
 
   def set_item
     @item = Item.find(params[:item_id])
