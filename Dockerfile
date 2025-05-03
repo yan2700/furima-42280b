@@ -41,7 +41,7 @@ RUN apt-get update -qq && \
     curl \
     default-mysql-client \
     libvips \
-+   libpq5 && \
+    libpq5 && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 COPY --from=build /usr/local/bundle /usr/local/bundle
