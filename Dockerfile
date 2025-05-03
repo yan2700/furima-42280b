@@ -28,6 +28,7 @@ RUN bundle install && \
     bundle exec bootsnap precompile --gemfile
 
 COPY . .
+RUN chmod +x bin/rails bin/docker-entrypoint
 
 RUN bundle exec bootsnap precompile app/ lib/
 RUN SECRET_KEY_BASE_DUMMY=1 ./bin/rails assets:precompile
