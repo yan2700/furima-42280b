@@ -3,10 +3,12 @@
     <%= link_to image_tag('furima-logo-color.png', size: '185x50'), "/" %>
   </header>
 
- 
+  <div class="items-sell-main">
+    <h2 class="items-sell-title">商品の情報を入力</h2>
+    <%= form_with model: @item, local: true, data: { turbo: false } do |f| %>
 <%= render 'shared/error_messages', model: @item %>
 
-<%= form_with model: @item, local: true do |f| %>
+
 
     <%# 商品画像 %>
     <div class="img-upload">
@@ -135,6 +137,15 @@
   <% end %>
   </div>
 
+<footer class="items-sell-footer">
+    <ul class="menu">
+      <li><a href="#">プライバシーポリシー</a></li>
+      <li><a href="#">フリマ利用規約</a></li>
+      <li><a href="#">特定商取引に関する表記</a></li>
+    </ul>
+    <%= link_to image_tag('furima-logo-color.png', size: '185x50'), "/" %>
+    <p class="inc">©︎Furima,Inc.</p>
+  </footer>
 
-  <%= render 'shared/second-footer', model: @item %>
+
 </div>
