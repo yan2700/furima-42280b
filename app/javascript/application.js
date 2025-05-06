@@ -4,9 +4,3 @@ import "controllers"
 import "item_price"
 import "card"
 
-//document.addEventListener("turbo:submit-end", function(event) {
- // if (event.detail.success) {
-    // 成功した場合、リダイレクト
-  //  window.location.href = "/items"; // または適切なリダイレクト先
- // }
-//});
