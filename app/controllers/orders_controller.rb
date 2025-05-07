@@ -31,7 +31,7 @@ def create
     end
   else
     flash[:alert] = @order_address.errors.full_messages.join(', ')
-    redirect_to item_orders_path(@item)
+    render :index, status: :unprocessable_entity
   end
 end
 

@@ -2,8 +2,7 @@ const pay = () => {
   const form = document.getElementById("charge-form");
   if (!form) return;
 
-  // 公開鍵をgonから取得
-  const payjp = Payjp(gon.public_key); // 
+  const payjp = Payjp(gon.public_key);
   const elements = payjp.elements();
   const numberElement = elements.create("cardNumber");
   const cvcElement = elements.create("cardCvc");
@@ -16,19 +15,23 @@ const pay = () => {
   form.addEventListener("submit", (e) => {
     e.preventDefault();
 
+    const oldError = document.getElementById("card-error-message");
+    if (oldError) oldError.remove();
+
     payjp.createToken(numberElement).then((response) => {
+      let tokenInput;
       if (response.error) {
-        alert(response.error.message);
+        // 空のトークンを送信してバリデーションを通す（alertは出さない）
+        tokenInput = `<input value="" type="hidden" name="token">`;
       } else {
-        const token = response.id;
-        const tokenObj = `<input value="${token}" type="hidden" name="token">`;
-        form.insertAdjacentHTML("beforeend", tokenObj);
-        form.submit();
+        // 通常のトークンを埋め込む
+        tokenInput = `<input value="${response.id}" type="hidden" name="token">`;
       }
+      form.insertAdjacentHTML("beforeend", tokenInput);
+      form.submit();
     });
   });
 };
-
 
 window.addEventListener("turbo:load", pay);
 window.addEventListener("turbo:render", pay);

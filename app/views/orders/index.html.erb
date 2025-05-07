@@ -31,19 +31,14 @@
       </p>
     </div>
     <%# /支払額の表示 %>
-<% if @order_address.errors.any? %>
-  <ul style="color: red; list-style-type: disc; padding-left: 20px; font-size: 14px;">
-    <% @order_address.errors.full_messages.uniq.each do |message| %>
-      <li><%= message %></li>
-    <% end %>
-  </ul>
-<% end %>
+
 
 
 
 
 <%= form_with model: @order_address, url: item_orders_path(@item), local: true, data: { turbo: false }, id: 'charge-form', class: 'card-form' do |f| %>
 
+<%= render 'shared/error_messages', model: @order_address %>
 
   
     <%# カード情報の入力 %>
