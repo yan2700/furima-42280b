@@ -1,6 +1,5 @@
 <%= include_gon %>
 <%= render "shared/second-header" %>
-<h1>テスト</h1>
 <div class='transaction-contents'>
   <div class='transaction-main'>
     <h1 class='transaction-title-text'>
@@ -37,7 +36,7 @@
 
 
 
-<%= form_with model: @order_address, url: item_orders_path(@item), local: true, data: { turbo: false }, id: 'charge-form', class: 'card-form' do |f| %>
+<%= form_with model: @order_address, url: item_orders_path(@item), local: true, data: { turbo: false }, id: 'charge-form', class: 'transaction-form-wrap' do |f| %>
 
 <%= render 'shared/error_messages', model: @order_address %>
 
