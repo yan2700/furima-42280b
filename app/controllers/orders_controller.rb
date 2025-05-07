@@ -11,27 +11,30 @@ class OrdersController < ApplicationController
     @order_address = OrderAddress.new
   end
   
-  def create
-    @order_address = OrderAddress.new(order_params)
- 
-    if @order_address.valid?
-      
-        Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
-        Payjp::Charge.create(
-          amount: @item.price,        
-          card: order_params[:token],   
-          currency: 'jpy'
-        )
-        @order_address.save
-        redirect_to root_path
-      
-    else
-      gon.public_key = ENV["PAYJP_PUBLIC_KEY"]
-      puts @order_address.errors.full_messages
-      render :index, status: :unprocessable_entity
+# OrdersController
+def create
+  @order_address = OrderAddress.new(order_params)
+
+  if @order_address.valid?
+    begin
+      Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+      Payjp::Charge.create(
+        amount: @item.price,
+        card: order_params[:token],
+        currency: 'jpy'
+      )
+      @order_address.save
+      redirect_to root_path
+    rescue Payjp::InvalidRequestError => e
+      flash[:alert] = "決済に失敗しました。もう一度お試しください。"
+      redirect_to item_orders_path(@item)
     end
+  else
+    flash[:alert] = @order_address.errors.full_messages.join(', ')
+    redirect_to item_orders_path(@item)
   end
-  
+end
+
   
   private
 
