@@ -1,0 +1,455 @@
+module Payjp
+  module TestData
+    def test_response(body, code = 200)
+      # When an exception is raised, restclient clobbers method_missing.  Hence we
+      # can't just use the stubs interface.
+      body = JSON.generate(body) unless body.is_a? String
+      m = mock
+      m.instance_variable_set('@payjp_values', { :body => body, :code => code })
+      def m.body
+        @payjp_values[:body]
+      end
+      def m.code
+        @payjp_values[:code]
+      end
+      m
+    end
+
+    def test_customer(params = {})
+      id = params[:id] || 'c_test_customer'
+      {
+        :cards => test_customer_card_array(id),
+        :created => 1304114758,
+        :default_card => "cc_test_card",
+        :description => nil,
+        :email => nil,
+        :id => id,
+        :livemode => false,
+        :object => "customer",
+        :subscriptions => test_subscription_array(id),
+        :metadata => {}
+      }.merge(params)
+    end
+
+    def test_customer_array
+      {
+        :count => 3,
+        :data => [test_customer, test_customer, test_customer],
+        :object => 'list',
+        :url => '/v1/customers'
+      }
+    end
+
+    def test_charge(params = {})
+      id = params[:id] || 'ch_test_charge'
+      {
+        :amount => 3500,
+        :amount_refunded => 0,
+        :captured => true,
+        :card => {
+          :address_city => nil,
+          :address_line1 => nil,
+          :address_line2 => nil,
+          :address_state => nil,
+          :address_zip => nil,
+          :address_zip_check => 'unchecked',
+          :brand => "Visa",
+          :country => nil,
+          :created => 1433127983,
+          :cvc_check => "unchecked",
+          :exp_month => 2,
+          :exp_year => 2020,
+          :fingerprint => "e1d8225886e3a7211127df751c86787f",
+          :id => "cc_test_card",
+          :last4 => "4242",
+          :name => nil,
+          :object => "card"
+        },
+        :created => 1433127983,
+        :currency => "jpy",
+        :customer => nil,
+        :description => nil,
+        :expired_at => nil,
+        :failure_code => nil,
+        :failure_message => nil,
+        :fee => 0,
+        :id => id,
+        :livemode => false,
+        :object => "charge",
+        :paid => true,
+        :refund_reason => nil,
+        :refunded => false,
+        :subscription => nil,
+        :metadata => {}
+      }.merge(params)
+    end
+
+    def test_charge_array
+      {
+        :count => 3,
+        :data => [test_charge, test_charge, test_charge],
+        :object => 'list',
+        :url => '/v1/charges'
+      }
+    end
+
+    def test_customer_card_array(customer_id)
+      {
+        :count => 3,
+        :data => [test_card, test_card, test_card],
+        :object => 'list',
+        :url => '/v1/customers/' + customer_id + '/cards'
+      }
+    end
+
+    def test_card(params = {})
+      {
+        :address_city => nil,
+        :address_line1 => nil,
+        :address_line2 => nil,
+        :address_state => nil,
+        :address_zip => nil,
+        :address_zip_check => 'unchecked',
+        :brand => "Visa",
+        :country => nil,
+        :created => 1433127983,
+        :customer => 'test_customer',
+        :cvc_check => "unchecked",
+        :exp_month => 2,
+        :exp_year => 2020,
+        :fingerprint => "e1d8225886e3a7211127df751c86787f",
+        :id => "cc_test_card",
+        :last4 => "4242",
+        :livemode => false,
+        :name => nil,
+        :object => "card"
+      }.merge(params)
+    end
+
+    def test_event_array
+      {
+        :count => 3,
+        :data => [test_event, test_event, test_event],
+        :object => 'list',
+        :url => '/v1/events'
+      }
+    end
+
+    def test_event(params = {})
+      {
+        :created => 1432973142,
+        :data => {},
+        :id => 'evnt_test_event',
+        :livemode => false,
+        :object => 'event',
+        :pending_webhooks => 0,
+        :type => 'subscription.resumed'
+      }.merge(params)
+    end
+
+    def test_plan_array
+      {
+        :count => 3,
+        :data => [test_plan, test_plan, test_plan],
+        :object => 'list',
+        :url => '/v1/plans'
+      }
+    end
+
+    def test_plan(params = {})
+      {
+        :amount => 500,
+        :created => 1433127983,
+        :currency => 'jpy',
+        :id => 'pln_test_plan',
+        :interval => 'month',
+        :livemode => false,
+        :object => 'plan',
+        :trial_days => 30
+      }.merge(params)
+    end
+
+    # FIXME: nested overrides would be better than hardcoding plan_id
+    def test_subscription(params = {})
+      plan = params.delete(:plan) || 'gold'
+      {
+        :current_period_end => 1308681468,
+        :status => "trialing",
+        :plan => {
+          :interval => "month",
+          :amount => 7500,
+          :trial_period_days => 30,
+          :object => "plan",
+          :identifier => plan
+        },
+        :current_period_start => 1308595038,
+        :start => 1308595038,
+        :object => "subscription",
+        :trial_start => 1308595038,
+        :trial_end => 1308681468,
+        :customer => "c_test_customer",
+        :id => 's_test_subscription'
+      }.merge(params)
+    end
+
+    def test_subscription_array(customer_id)
+      {
+        :data => [test_subscription, test_subscription, test_subscription],
+        :object => 'list',
+        :url => '/v1/customers/' + customer_id + '/subscriptions'
+      }
+    end
+
+    def test_token(params = {})
+      card = params[:card] || {}
+      {
+        :card => test_card(card),
+        :created => 1433127983,
+        :id => 'tok_test_token',
+        :livemode => false,
+        :object => 'token',
+        :used => false
+      }.merge(params)
+    end
+
+    def test_transfer(params = {})
+      {
+        :amount => 1000,
+        :charges => {
+          :count => 1,
+          :data => [test_charge],
+          :object => 'list',
+          :url => '/v1/transfers/tr_test_transfer/charges'
+        },
+        :created => 1432965397,
+        :currency => "jpy",
+        :date => 1432965401,
+        :description => "test",
+        :id => "tr_test_transfer",
+        :livemode => false,
+        :object => "transfer",
+        :status => 'paid',
+        :summary => {
+          :charge_count => 1,
+          :charge_fee => 0,
+          :charge_gross => 1000,
+          :net => 1000,
+          :refund_amount => 0,
+          :refund_count => 0,
+          :dispute_amount => 0,
+          :dispute_count => 0
+        },
+        :metadata => {}
+      }.merge(params)
+    end
+
+    def test_transfer_array
+      {
+        :count => 3,
+        :data => [test_transfer, test_transfer, test_transfer],
+        :object => 'list',
+        :url => '/v1/transfers'
+      }
+    end
+
+    def test_tenant(params = {})
+      {
+        :created => 1433127983,
+        :name => "test",
+        :id => "test",
+        :livemode => false,
+        :metadata => nil,
+        :object => "tenant",
+        :platform_fee_rate => "10.15",
+        :payjp_fee_included => false,
+        :minimum_transfer_amount => 1000,
+        :bank_account_number => "0001000",
+        :bank_branch_code => "000",
+        :bank_code => "0000",
+        :bank_account_holder_name => "ヤマダ タロウ",
+        :bank_account_type => "普通",
+        :bank_account_status => "pending"
+      }.merge(params)
+    end
+
+    def test_tenant_array
+      {
+        :count => 3,
+        :data => [test_tenant, test_tenant, test_tenant],
+        :object => 'list',
+        :url => '/v1/tenants'
+      }
+    end
+
+    def test_invalid_api_key_error
+      {
+        :error => {
+          :type => "invalid_request_error",
+          :message => "Invalid API Key provided: invalid"
+        }
+      }
+    end
+
+    def test_invalid_exp_year_error
+      {
+        :error => {
+          :code => "invalid_expiry_year",
+          :param => "exp_year",
+          :type => "card_error",
+          :message => "Your card's expiration year is invalid"
+        }
+      }
+    end
+
+    def test_missing_id_error
+      {
+        :error => {
+          :param => "id",
+          :type => "invalid_request_error",
+          :message => "Missing id"
+        }
+      }
+    end
+
+    def test_api_error
+      {
+        :error => {
+          :type => "api_error"
+        }
+      }
+    end
+
+    def test_over_capacity_error
+      {
+        :error => {
+          :code => "over_capacity",
+          :type => "api_error"
+        }
+      }
+    end
+
+    def test_statement(params = {})
+      {
+        :created => 1695620296,
+        :id => "st_test",
+        :items => [
+            {
+                :amount => 282358654,
+                :name => "売上",
+                :subject => "gross_sales",
+                :tax_rate => "0.00"
+            },
+            {
+                :amount => -65699624,
+                :name => "返金",
+                :subject => "gross_refund",
+                :tax_rate => "0.00"
+            },
+            {
+                :amount => -7054912,
+                :name => "決済手数料",
+                :subject => "fee",
+                :tax_rate => "0.10"
+            },
+            {
+                :amount => 1644315,
+                :name => "返金による手数料返還",
+                :subject => "refund_fee_offset",
+                :tax_rate => "0.10"
+            }
+        ],
+        :object => "statement",
+        :title => nil,
+        :tenant_id => nil,
+        :updated => 1695892351
+      }.merge(params)
+    end
+
+    def test_statement_array
+      {
+        :count => 2,
+        :data => [test_statement, test_statement],
+        :object => 'list',
+        :url => '/v1/statements'
+      }
+    end
+
+    def test_term_array
+      {
+        :count => 3,
+        :data => [test_term, test_term, test_term],
+        :object => 'list',
+        :url => '/v1/terms'
+      }
+    end
+
+    def test_term(params = {})
+      {
+        :id => "tm_test_term",
+        :livemode => false,
+        :object => "term",
+        :charge_count => 158,
+        :refund_count => 25,
+        :dispute_count => 2,
+        :end_at => 1439650800,
+        :start_at => 1438354800
+      }.merge(params)
+    end
+
+    def test_balance_array
+      {
+        :count => 3,
+        :data => [test_balance, test_balance, test_balance],
+        :object => 'list',
+        :url => '/v1/terms'
+      }
+    end
+
+    def test_balance(params = {})
+      {
+        :created => 1438354800,
+        :id => 'ba_test_balance',
+        :livemode => false,
+        :net => 1000,
+        :object => 'balance',
+        :state => 'collecting',
+        :tenant_id => nil,
+        :statements => {
+          :count => 2,
+          :data => [test_statement,test_statement],
+          :object => 'list',
+          :url => '/v1/statements'
+        },
+        :closed => false,
+        :due_date => nil,
+        :bank_info => nil
+      }.merge(params)
+    end
+
+    def test_three_d_secure_request(params = {})
+      {
+        :created => 1730084767,
+        :expired_at => nil,
+        :finished_at => nil,
+        :id => "tdsr_xxx",
+        :livemode => true,
+        :object => "three_d_secure_request",
+        :resource_id => "car_xxx",
+        :result_received_at => nil,
+        :started_at => nil,
+        :state => "created",
+        :tenant_id => nil,
+        :three_d_secure_status => "unverified",
+      }.merge(params)
+    end
+
+    def test_three_d_secure_request_array
+      {
+        :count => 3,
+        :data => [test_three_d_secure_request({:id=>'tdsr_xxx1'}), test_three_d_secure_request({:id=>'tdsr_xxx2'}), test_three_d_secure_request({:id=>'tdsr_xxx3'})],
+        :object => 'list',
+        :url => '/v1/three_d_secure_requests'
+      }
+    end
+  end
+end
