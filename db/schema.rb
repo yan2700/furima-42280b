@@ -53,9 +53,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_01_123005) do
   end
 
   create_table "items", charset: "utf8mb3", force: :cascade do |t|
-    t.string "name"
-    t.text "description"
-    t.integer "price"
+    t.string "name", null: false
+    t.text "description", null: false
+    t.integer "price", null: false
     t.bigint "user_id", null: false
     t.integer "category_id", null: false
     t.integer "status_id", null: false
@@ -68,8 +68,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_01_123005) do
   end
 
   create_table "orders", charset: "utf8mb3", force: :cascade do |t|
-    t.bigint "item_id", null: false
+    t.integer "price", null: false
     t.bigint "user_id", null: false
+    t.bigint "item_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["item_id"], name: "index_orders_on_item_id"
@@ -84,12 +85,12 @@ ActiveRecord::Schema[7.1].define(version: 2025_05_01_123005) do
     t.string "first_name", null: false
     t.string "last_name_kana", null: false
     t.string "first_name_kana", null: false
+    t.date "birthday", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "birthday"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
