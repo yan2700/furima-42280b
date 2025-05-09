@@ -14,10 +14,10 @@ Gem::Specification.new do |s|
   s.email = "jferris@thoughtbot.com".freeze
   s.homepage = "https://github.com/thoughtbot/factory_bot_rails".freeze
   s.licenses = ["MIT".freeze]
-  s.rubygems_version = "3.4.20".freeze
+  s.rubygems_version = "3.4.1".freeze
   s.summary = "factory_bot_rails provides integration between factory_bot and rails 5.0 or newer".freeze
 
-  s.installed_by_version = "3.4.20" if s.respond_to? :installed_by_version
+  s.installed_by_version = "3.4.1" if s.respond_to? :installed_by_version
 
   s.specification_version = 4
 

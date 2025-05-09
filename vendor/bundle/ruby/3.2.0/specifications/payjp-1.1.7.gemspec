@@ -14,10 +14,10 @@ Gem::Specification.new do |s|
   s.email = ["support@pay.jp".freeze]
   s.homepage = "https://pay.jp".freeze
   s.licenses = ["MIT".freeze]
-  s.rubygems_version = "3.4.20".freeze
+  s.rubygems_version = "3.4.1".freeze
   s.summary = "Ruby bindings for the Payjp API".freeze
 
-  s.installed_by_version = "3.4.20" if s.respond_to? :installed_by_version
+  s.installed_by_version = "3.4.1" if s.respond_to? :installed_by_version
 
   s.specification_version = 4
 

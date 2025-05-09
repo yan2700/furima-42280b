@@ -15,10 +15,10 @@ Gem::Specification.new do |s|
   s.files = ["LICENSE.txt".freeze, "README.md".freeze]
   s.homepage = "https://github.com/sparklemotion/http-cookie".freeze
   s.licenses = ["MIT".freeze]
-  s.rubygems_version = "3.4.20".freeze
+  s.rubygems_version = "3.4.1".freeze
   s.summary = "A Ruby library to handle HTTP Cookies based on RFC 6265".freeze
 
-  s.installed_by_version = "3.4.20" if s.respond_to? :installed_by_version
+  s.installed_by_version = "3.4.1" if s.respond_to? :installed_by_version
 
   s.specification_version = 4
 
